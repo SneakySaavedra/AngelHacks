@@ -5,73 +5,66 @@ using UnityEngine;
 public class PlayerInteract : MonoBehaviour
 {
     public float rayDist;
-    public bool isHolding;
-    public Transform left;
-    public Transform right;
+    public bool holding;
+    public Transform hold;
     public GameObject heldObject;
 
     private void Update()
     {
-        RaycastHit2D grabCheck = Physics2D.Raycast(right.position, Vector2.right * transform.localScale.x, rayDist);
+        RaycastHit2D grabCheck = Physics2D.Raycast(hold.position, Vector2.right * transform.localScale.x, rayDist);
+        if (grabCheck.collider)
+        {
+            //Debug.Log(grabCheck.collider.name);
+            Debug.Log(grabCheck.transform.tag);
+        }
+        if (heldObject != null)
+        {
+            heldObject.transform.position = transform.position;
+        }
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            Debug.Log("G is pressed");
-            if (!isHolding && grabCheck.collider)
+            if (!holding && grabCheck.collider != null)
             {
-                if (grabCheck.collider.CompareTag("FoodObject") && !grabCheck.collider.GetComponent<Food>().isHeld)
+                if (grabCheck.collider.CompareTag("FoodObject"))
                 {
-                    GameObject col = grabCheck.collider.gameObject;
-                    Debug.Log("Contact with food");
-                    col.GetComponent<Food>().isHeld = true;
+                    holding = true;
                     heldObject = grabCheck.collider.gameObject;
-                    col.transform.position = transform.position;
-                    col.transform.parent = transform;
-                    isHolding = true;
-
-                }
-
-                if(grabCheck.collider.CompareTag("Station"))
-                {
-                    Debug.Log("Grabbing from station");
-                    GameObject col = grabCheck.collider.gameObject;
-                    heldObject = col.GetComponent<StirringStation>().food;
-                    col.GetComponent<StirringStation>().food = null;
                     heldObject.transform.parent = transform;
-                    heldObject.transform.position = transform.position;
-                    isHolding = true;
                 }
-            }
-            else
-            {
-                heldObject.transform.parent = null;
-                heldObject.GetComponent<Food>().isHeld = false;
-                isHolding = false;
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (isHolding)
-            {
-                if (grabCheck.collider && grabCheck.collider.CompareTag("Station"))
+                if(grabCheck.collider.CompareTag("Station") && grabCheck.collider.GetComponent<StirringStation>().hasFood)
                 {
-                    heldObject.GetComponent<Food>().isHeld = false;
-                    grabCheck.collider.GetComponent<StirringStation>().food = heldObject;
-                    heldObject = null;
-                    isHolding = false;
+                    holding = true;
+                    heldObject = grabCheck.collider.GetComponent<StirringStation>().food; // food is now the station's food
+                    heldObject.transform.parent = transform;
+                    grabCheck.collider.GetComponent<StirringStation>().hasFood = false;  // station no longer has food
+                    grabCheck.collider.GetComponent<StirringStation>().food = null; // get rid of station food
                 }
+            }
+
+            else if(holding)
+            {
+                if(grabCheck.collider != null && grabCheck.collider.CompareTag("Station") && !grabCheck.collider.GetComponent<StirringStation>().hasFood)
+                {
+                    holding = false;
+                    grabCheck.collider.GetComponent<StirringStation>().food = heldObject; // station food is now player food
+                    heldObject = null; // player has no food
+                    grabCheck.collider.GetComponent<StirringStation>().hasFood = true; // station has food
+                }
+                else
+                {
+                    holding = false;
+                    heldObject.transform.parent = null;
+                    heldObject = null;
+                } 
             }
         }
     }
-    private void FixedUpdate()
-    {
-        
-    }
+
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(right.position, right.position + Vector3.right * transform.localScale.x * rayDist);
+        Gizmos.DrawLine(hold.position, hold.position + Vector3.right * transform.localScale.x * rayDist);
     }
 }
