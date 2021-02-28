@@ -17,10 +17,10 @@ public class PlayerInteract : MonoBehaviour
             //Debug.Log(grabCheck.collider.name);
             //Debug.Log(grabCheck.transform.tag);
         }
-        if (heldObject != null)
-        {
-            heldObject.transform.position = transform.position;
-        }
+        //if (heldObject != null)
+        //{
+        //    heldObject.transform.position = hold.position;
+        //}
 
         if (Input.GetKeyDown(KeyCode.G)) // pick up / put down
         {
@@ -31,6 +31,8 @@ public class PlayerInteract : MonoBehaviour
                     holding = true;
                     heldObject = grabCheck.collider.gameObject;
                     heldObject.transform.parent = transform;
+                    heldObject.transform.position = hold.position;
+                    heldObject.GetComponent<BoxCollider2D>().enabled = false;
                 }
                 if(grabCheck.collider.CompareTag("Station") && grabCheck.collider.GetComponent<Station>().hasFood)
                 {
@@ -39,6 +41,7 @@ public class PlayerInteract : MonoBehaviour
                     heldObject.transform.parent = transform;
                     grabCheck.collider.GetComponent<Station>().hasFood = false;  // station no longer has food
                     grabCheck.collider.GetComponent<Station>().food = null; // get rid of station food
+                    heldObject.GetComponent<BoxCollider2D>().enabled = true;
                 }
             }
 
@@ -50,10 +53,12 @@ public class PlayerInteract : MonoBehaviour
                     grabCheck.collider.GetComponent<Station>().food = heldObject; // station food is now player food
                     heldObject = null; // player has no food
                     grabCheck.collider.GetComponent<Station>().hasFood = true; // station has food
+                    grabCheck.collider.GetComponent<Station>().food.GetComponent<BoxCollider2D>().enabled = false;
                 }
                 else
                 {
                     holding = false;
+                    heldObject.GetComponent<BoxCollider2D>().enabled = true;
                     heldObject.transform.parent = null;
                     heldObject = null;
                 } 
