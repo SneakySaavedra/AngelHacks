@@ -7,4 +7,6 @@ public class Food : MonoBehaviour
     public bool isHeld;
     public float cookTime;
     public float status;
+    public string state = "Raw";
+
 }

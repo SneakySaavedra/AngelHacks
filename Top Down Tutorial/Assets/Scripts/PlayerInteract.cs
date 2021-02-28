@@ -15,7 +15,7 @@ public class PlayerInteract : MonoBehaviour
         if (grabCheck.collider)
         {
             //Debug.Log(grabCheck.collider.name);
-            Debug.Log(grabCheck.transform.tag);
+            //Debug.Log(grabCheck.transform.tag);
         }
         if (heldObject != null)
         {
@@ -32,24 +32,24 @@ public class PlayerInteract : MonoBehaviour
                     heldObject = grabCheck.collider.gameObject;
                     heldObject.transform.parent = transform;
                 }
-                if(grabCheck.collider.CompareTag("Station") && grabCheck.collider.GetComponent<StirringStation>().hasFood)
+                if(grabCheck.collider.CompareTag("Station") && grabCheck.collider.GetComponent<Station>().hasFood)
                 {
                     holding = true;
-                    heldObject = grabCheck.collider.GetComponent<StirringStation>().food; // food is now the station's food
+                    heldObject = grabCheck.collider.GetComponent<Station>().food; // food is now the station's food
                     heldObject.transform.parent = transform;
-                    grabCheck.collider.GetComponent<StirringStation>().hasFood = false;  // station no longer has food
-                    grabCheck.collider.GetComponent<StirringStation>().food = null; // get rid of station food
+                    grabCheck.collider.GetComponent<Station>().hasFood = false;  // station no longer has food
+                    grabCheck.collider.GetComponent<Station>().food = null; // get rid of station food
                 }
             }
 
             else if(holding)
             {
-                if(grabCheck.collider != null && grabCheck.collider.CompareTag("Station") && !grabCheck.collider.GetComponent<StirringStation>().hasFood)
+                if(grabCheck.collider != null && grabCheck.collider.CompareTag("Station") && !grabCheck.collider.GetComponent<Station>().hasFood)
                 {
                     holding = false;
-                    grabCheck.collider.GetComponent<StirringStation>().food = heldObject; // station food is now player food
+                    grabCheck.collider.GetComponent<Station>().food = heldObject; // station food is now player food
                     heldObject = null; // player has no food
-                    grabCheck.collider.GetComponent<StirringStation>().hasFood = true; // station has food
+                    grabCheck.collider.GetComponent<Station>().hasFood = true; // station has food
                 }
                 else
                 {
@@ -61,11 +61,19 @@ public class PlayerInteract : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.E) && !holding)
         {
-            Debug.Log("E");
-            if(grabCheck.collider && grabCheck.collider.CompareTag("Station") && grabCheck.collider.GetComponent<StirringStation>().hasFood)
+            if(grabCheck.collider && grabCheck.collider.CompareTag("Station") && grabCheck.collider.GetComponent<Station>().hasFood)
             {
-                Debug.Log("test");
-                grabCheck.collider.GetComponent<StirringStation>().food.GetComponent<Food>().status -= Time.deltaTime;
+                Food f = grabCheck.collider.GetComponent<Station>().food.GetComponent<Food>();
+                if(f.status <= 0)
+                {
+                    f.state = "Cooked";
+                    f.status = 0f;
+                }
+                else
+                {
+                    f.status -= Time.deltaTime;
+                }
+                
             }
         }
     }
