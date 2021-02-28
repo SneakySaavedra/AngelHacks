@@ -51,6 +51,18 @@ public class PlayerInteract : MonoBehaviour
                     heldObject.transform.position = hold.position;
                     heldObject.GetComponent<BoxCollider2D>().enabled = false;
                 }
+                if (grabCheck.collider.CompareTag("Counter") && grabCheck.collider.GetComponent<Counter>().hasFood)
+                {
+                    holding = true;
+                    heldObject = grabCheck.collider.GetComponent<Counter>().foods[grabCheck.collider.GetComponent<Counter>().foods.Count - 1];
+                    grabCheck.collider.GetComponent<Counter>().foods.RemoveAt(grabCheck.collider.GetComponent<Counter>().foods.Count - 1);
+                    grabCheck.collider.GetComponent<Counter>().foods.TrimExcess();
+                    grabCheck.collider.GetComponent<Counter>().hasFood = grabCheck.collider.GetComponent<Counter>().foods.Count > 0 ? true : false;
+
+                    heldObject.transform.parent = transform;
+                    heldObject.transform.position = hold.position;
+                    heldObject.GetComponent<BoxCollider2D>().enabled = false;
+                }
             }
 
             else if(holding)
@@ -62,6 +74,17 @@ public class PlayerInteract : MonoBehaviour
                     heldObject = null; // player has no food
                     grabCheck.collider.GetComponent<Station>().hasFood = true; // station has food
                     grabCheck.collider.GetComponent<Station>().food.GetComponent<BoxCollider2D>().enabled = false;
+                }
+                else if (grabCheck.collider != null && grabCheck.collider.CompareTag("Counter"))
+                {
+                    holding = false;
+                    heldObject.transform.parent = grabCheck.collider.transform;
+                    heldObject.transform.position = grabCheck.transform.position;
+                    grabCheck.collider.GetComponent<Counter>().foods.Add(heldObject); // station food is now player food
+                    heldObject = null; // player has no food
+                    grabCheck.collider.GetComponent<Counter>().hasFood = true; // station has food
+                    grabCheck.collider.GetComponent<Counter>().foods[grabCheck.collider.GetComponent<Counter>().foods.Count-1].GetComponent<BoxCollider2D>().enabled = false;
+                    grabCheck.collider.GetComponent<Counter>().checkContents();
                 }
                 else
                 {

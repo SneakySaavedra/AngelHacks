@@ -7,7 +7,7 @@ TagManager:
   - FoodObject
   - Station
   - Dispenser
-  - Stove
+  - Counter
   layers:
   - Default
   - TransparentFX

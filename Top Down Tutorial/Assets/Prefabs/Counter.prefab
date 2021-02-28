@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7033167119510356186}
   - component: {fileID: 7033167119510356185}
   - component: {fileID: 4723719218735477436}
+  - component: {fileID: 5019206170398787084}
   m_Layer: 0
   m_Name: Counter
-  m_TagString: Untagged
+  m_TagString: Counter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,3 +110,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5019206170398787084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7033167119510356184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c9f252a876b0ed4a9d92534a714392d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  foods: []
+  hasFood: 0
+  dishes:
+  - {fileID: 5684680615332383398, guid: 9ece1b7c5b3108047bd101dbf4428f64, type: 3}
