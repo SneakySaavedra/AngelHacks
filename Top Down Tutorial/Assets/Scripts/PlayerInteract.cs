@@ -22,7 +22,7 @@ public class PlayerInteract : MonoBehaviour
             heldObject.transform.position = transform.position;
         }
 
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G)) // pick up / put down
         {
             if (!holding && grabCheck.collider != null)
             {
@@ -57,6 +57,15 @@ public class PlayerInteract : MonoBehaviour
                     heldObject.transform.parent = null;
                     heldObject = null;
                 } 
+            }
+        }
+        if (Input.GetKey(KeyCode.E) && !holding)
+        {
+            Debug.Log("E");
+            if(grabCheck.collider && grabCheck.collider.CompareTag("Station") && grabCheck.collider.GetComponent<StirringStation>().hasFood)
+            {
+                Debug.Log("test");
+                grabCheck.collider.GetComponent<StirringStation>().food.GetComponent<Food>().status -= Time.deltaTime;
             }
         }
     }
