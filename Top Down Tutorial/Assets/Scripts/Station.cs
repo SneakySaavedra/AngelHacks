@@ -7,8 +7,14 @@ public class Station : MonoBehaviour
     public Transform foodPoint;
     public GameObject food;
     public bool hasFood;
+    public bool timed;
     public ProgressBar timer;
     public GameObject bar;
+
+    private void Start()
+    {
+        bar.GetComponent<RectTransform>().anchoredPosition = transform.position.x > 0 ? new Vector2(1.25f, 0) : new Vector2(-1.25f, 0);
+    }
 
     private void Update()
     {

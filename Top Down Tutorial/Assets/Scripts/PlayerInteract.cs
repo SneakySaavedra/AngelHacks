@@ -41,7 +41,15 @@ public class PlayerInteract : MonoBehaviour
                     heldObject.transform.parent = transform;
                     grabCheck.collider.GetComponent<Station>().hasFood = false;  // station no longer has food
                     grabCheck.collider.GetComponent<Station>().food = null; // get rid of station food
-                    heldObject.GetComponent<BoxCollider2D>().enabled = true;
+                    heldObject.GetComponent<BoxCollider2D>().enabled = false;
+                }
+                if (grabCheck.collider.CompareTag("Dispenser"))
+                {
+                    holding = true;
+                    heldObject = grabCheck.collider.GetComponent<Spawner>().spawnFood();
+                    heldObject.transform.parent = transform;
+                    heldObject.transform.position = hold.position;
+                    heldObject.GetComponent<BoxCollider2D>().enabled = false;
                 }
             }
 
@@ -79,6 +87,14 @@ public class PlayerInteract : MonoBehaviour
                     f.status -= Time.deltaTime;
                 }
                 
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (grabCheck.collider && grabCheck.collider.CompareTag("Station") && grabCheck.collider.GetComponent<Station>().hasFood && grabCheck.collider.GetComponent<Station>().timed)
+            {
+                Food f = grabCheck.collider.GetComponent<Station>().food.GetComponent<Food>();
+                f.isCooking = true;
             }
         }
     }
