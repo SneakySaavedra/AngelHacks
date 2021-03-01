@@ -117,7 +117,7 @@ MonoBehaviour:
   status: 0
   state: Raw
   isCooking: 0
-  completed: {fileID: 0}
+  completed: {fileID: 21300000, guid: 3d0812d352d38c94c91191c4055d5981, type: 3}
 --- !u!61 &5010895892487392842
 BoxCollider2D:
   m_ObjectHideFlags: 0

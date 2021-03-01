@@ -98,7 +98,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredients:
   - {fileID: 5874927210961818620, guid: 82834cd6a2b4a4f4f96fbd8654d9a61f, type: 3}
-  - {fileID: 1153351813731642614, guid: 39a7c14003809c84697e1e0d9b2c17c7, type: 3}
+  - {fileID: 8469686133807390039, guid: 737683cbab0d9db4194cb9df51932a30, type: 3}
+  - {fileID: 7927618767844311371, guid: 2c6a771e690cf5d46bb6ea217c3cdc51, type: 3}
+  - {fileID: 7219359247999027958, guid: 144cc37ee2e24294dac6ccc9e6206f2c, type: 3}
+  - {fileID: 1904338421213458279, guid: dfd6a3e140623d94589a56c423c4902b, type: 3}
 --- !u!61 &-6582255964642619552
 BoxCollider2D:
   m_ObjectHideFlags: 0
