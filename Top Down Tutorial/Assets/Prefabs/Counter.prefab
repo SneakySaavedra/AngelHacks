@@ -125,4 +125,8 @@ MonoBehaviour:
   foods: []
   hasFood: 0
   dishes:
-  - {fileID: 5684680615332383398, guid: 9ece1b7c5b3108047bd101dbf4428f64, type: 3}
+  - {fileID: 5684680615332383399, guid: 9ece1b7c5b3108047bd101dbf4428f64, type: 3}
+  - {fileID: 1363829213825386291, guid: 91d85a2cb3f7fea4ba37aa2362301b20, type: 3}
+  - {fileID: 5383211683594692630, guid: ac953ade186fd534aae24cea21c9b041, type: 3}
+  - {fileID: 7396434565061099961, guid: 73edab4e7e5faf14ca5858cfa796ba7e, type: 3}
+  - {fileID: 7618871789855172610, guid: e7f8dc5e15df8ae48a4c204fa7ce057a, type: 3}

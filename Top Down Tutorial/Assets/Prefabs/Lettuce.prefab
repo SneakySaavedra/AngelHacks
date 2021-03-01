@@ -95,6 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7983d962552b0c04d9ca855b5f0806a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: lettuce
   isHeld: 0
   cookTime: 3
   status: 3

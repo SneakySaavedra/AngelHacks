@@ -1,37 +1,59 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class Counter : MonoBehaviour
 {
     public List<GameObject> foods = new List<GameObject>();
     public bool hasFood;
 
-    public Dish[] dishes;
+    public GameObject[] dishes;
 
     bool contains;
     public void checkContents()
     {
-        Debug.Log("checking");
-        foreach(Dish dish in dishes)
+
+        foreach(GameObject dish in dishes)
         {
-            contains = false;
-            foreach (GameObject ingredient in dish.ingredients)
+            bool hasAll = true;
+            bool[] contains = new bool[dish.GetComponent<Dish>().ingredients.Length];
+            List<GameObject> delete = new List<GameObject>();
+
+            for(int i = 0; i < dish.GetComponent<Dish>().ingredients.Length; i++)
             {
-                Debug.Log("FE");
-                if (foods.Contains(ingredient))
+                foreach(GameObject f in foods)
                 {
-                    contains = true;
-                }
-                else
-                {
-                    contains = false;
+                    if(dish.GetComponent<Dish>().ingredients[i].GetComponent<Food>().id == f.GetComponent<Food>().id)
+                    {
+                        contains[i] = true;
+                        delete.Add(f);
+                    }
                 }
             }
-            if (contains)
+
+            foreach (bool b in contains) Debug.Log(b.ToString());
+
+            foreach (bool b in contains)
             {
-                Debug.Log("Contains");
+                if (b == false)
+                {
+                    hasAll = false;
+                }
+            }
+            Debug.Log("Has all is " + hasAll);
+
+            if (hasAll)
+            {
+                foreach(GameObject f in delete)
+                {
+                    foods.Remove(f);
+                    Destroy(f);
+                }
+
+                foods.TrimExcess();
+                GameObject a = Instantiate(dish, transform);
+                foods.Add(a);
+
             }
         }
     }

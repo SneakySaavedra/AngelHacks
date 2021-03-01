@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Food : MonoBehaviour
 {
+    public string id;
     public bool isHeld;
     public float cookTime;
     public float status;
